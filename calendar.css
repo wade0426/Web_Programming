@@ -1,0 +1,80 @@
+body {
+    /* display: flex;
+    justify-content: center;
+    align-items:start;
+    height: 100vh;
+    margin: 0; */
+    margin: 0;
+    padding: 0;
+    /* display: flex; */
+    justify-content: center; /* 水平居中 */
+    align-items: center;    /* 垂直居中 */
+}
+
+.calendar {
+    /* display: flex; */
+    width: 100%;
+    max-width: 400px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin: 0 0% 0 37.5%;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffa500;
+    color: white;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 1px;
+    background-color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.calendar-grid div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.calendar-grid div.selected {
+    background-color: #ffa500;
+    color: white;
+    border-radius: 50%; 
+}
+
+.date-info {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+@media (max-width: 480px) {
+    .calendar {
+        max-width: 300px;
+    }
+
+    .calendar-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .calendar-header div {
+        margin-top: 10px;
+    }
+
+    .calendar-grid div {
+        padding: 5px;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    padding: 0;
+    /* background: #333; */
+    font-family: Arial, sans-serif;
+  }
+  
+  .nav {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    padding: 1rem;
+    margin: 0;
+    background: #444;
+    justify-content: center;
+  }
+  
+  .nav li {
+    color: #fff;
+    display: grid;
+    place-content: center;
+    margin: 0;
+    position: relative; /* 需要為 ::before 設置相對定位的父元素 */
+  }
+  
+  .nav .menu {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    padding: 0.5rem 1rem;
+    display: block;
+  }
+  
+  .nav .menu::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: all 0.5s ease; /* 修正 transition duration */
+    bottom: 0;
+    left: 0;
+  }
+  
+  .nav .menu:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .c_center {
+    text-align: center;
+  }
