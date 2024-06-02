@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>登入</title>
     <link rel="stylesheet" href="login_style.css">
 </head>
 <body>
@@ -31,7 +31,11 @@
                         $_SESSION['user_id'] = $row['id'];
                         $_SESSION['username'] = $row['username'];
                         // echo "Login successful!";
-                        header('Location: add_record.php');
+                        // 託管不支援
+                        // header('Location: view_records.php');
+                        echo "<script>
+                            window.location.href = 'view_records.php';</script>";
+                        exit();
                     }
                     else {
                         echo "<script>alert('登入失敗！(Invalid password.)')</script>";

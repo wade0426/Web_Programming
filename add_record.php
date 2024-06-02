@@ -14,6 +14,7 @@
 </head>
 <?php
     include 'db.php';
+    include 'navbar.php';
 
     if (!isset($_SESSION['user_id'])) {
         die("Please login first.");
@@ -54,13 +55,13 @@
 ?>
 
 <body>
-    
-    <ul class="nav">
+    <!-- 停止使用(使用引入) -->
+    <!-- <ul class="nav">
         <li><a href="view_records.php" class="menu">主頁</a></li>
         <li><a href="add_record.php" class="menu">新增</a></li>
         <li><a href="#" class="menu">幫助</a></li>
         <li><a href="logout.php" class="menu">登出</a></li>
-    </ul>
+    </ul> -->
     <div class="c_center">
         <h2>新增消費紀錄</h2>
         <form method="POST" action="">
@@ -89,3 +90,8 @@
     </div>
 </body>
 </html>
+
+<!--  -->
+
+
+

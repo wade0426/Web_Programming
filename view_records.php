@@ -3,49 +3,50 @@
   session_start();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>主頁</title>
     <link rel="stylesheet" href="view_records.css">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous"> -->
 </head>
 <style>
 </style>
 <?php
-        include 'db.php';
+  include 'db.php';
+  include 'navbar.php';
 
-        if (!isset($_SESSION['user_id'])) {
-            die("Please login first.");
-        }
+  if (!isset($_SESSION['user_id'])) {
+      die("Please login first.");
+  }
 
-        $user_id = $_SESSION['user_id'];
-        $query = "SELECT records.*, categories.name AS category_name 
-                FROM records 
-                JOIN categories ON records.category_id = categories.id 
-                WHERE user_id='$user_id'
-                ORDER BY record_date DESC";
+  $user_id = $_SESSION['user_id'];
+  $query = "SELECT records.*, categories.name AS category_name 
+          FROM records 
+          JOIN categories ON records.category_id = categories.id 
+          WHERE user_id='$user_id'
+          ORDER BY record_date DESC";
 
-        $records = mysqli_query($link, $query);
-    ?>
+  $records = mysqli_query($link, $query);
+?>
 <body>
-    <ul class="nav c_center">
+  <!-- 使用引用方式(停止使用) -->
+    <!-- <ul class="nav c_center">
         <li><a href="view_records.php" class="menu">主頁</a></li>
         <li><a href="add_record.php" class="menu">新增</a></li>
+        <li><a href="search_records.php" class="menu">查詢</a></li>
         <li><a href="#" class="menu">幫助</a></li>
         <li><a href="logout.php" class="menu">登出</a></li>
-        <!-- <li><a href="#" class="menu">Laptop</a></li> -->
-    </ul>
+        <li><a href="#" class="menu">Laptop</a></li>
+    </ul> -->
     <h1 style="text-align:center;">主頁</h1>
 
     <br><hr><br>
 
     <!-- 日曆 -->
-
-    <div style="left: 50%;" class="calendar">
+    <div class="calendar">
         <div class="calendar-header">
             <button id="prev-month">&#8249;</button>
             <div>
@@ -134,6 +135,13 @@
             const day = document.createElement('div');
             day.textContent = date;
             day.addEventListener('click', selectDate);
+
+            // 今天的日期自動被點擊
+            if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
+              day.classList.add('selected');
+              dateInfo.textContent = `${year}年${month+1}月${date}日`;
+            }
+
             calendarGrid.appendChild(day);
             date++;
           }
@@ -193,6 +201,7 @@
 
     <br><hr><br>
 
+    <?php /* 註解未啟用 舊版紀錄顯示
     <table border="1"  align="center" valign="middle" style="text-align:center;">
         <tr>
             <th>類別(Category)</th>
@@ -211,6 +220,90 @@
         </tr>
         <?php endwhile; ?>
     </table>
+    */ ?>
+
+    <!--  -->
+
+    <?php
+
+    // include 'db.php';
+
+    // if (!isset($_SESSION['user_id'])) {
+    //     die("Please login first.");
+    // }
+
+    $user_id = $_SESSION['user_id'];
+
+    // 刪除全部
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_all'])) {
+      $delete_all_query = "DELETE FROM records WHERE user_id='$user_id'";
+      
+      if (mysqli_query($link, $delete_all_query)) {
+          echo "All records deleted successfully!";
+      } else {
+          echo "Error: " . mysqli_error($link);
+      }
+    }
+
+    // 選擇刪除
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_selected'])) {
+        $delete_ids = implode(",", $_POST['delete_ids']);
+        $delete_selected_query = "DELETE FROM records WHERE id IN ($delete_ids) AND user_id='$user_id'";
+        
+        if (mysqli_query($link, $delete_selected_query)) {
+            echo "Selected records deleted successfully!";
+        } else {
+            echo "Error: " . mysqli_error($link);
+        }
+    }
+
+    $query = "SELECT records.*, categories.name AS category_name 
+              FROM records 
+              JOIN categories ON records.category_id = categories.id 
+              WHERE user_id='$user_id'
+              ORDER BY record_date DESC";
+
+    $records = mysqli_query($link, $query);
+    ?>
+
+    <form method="POST" action="">
+        <input type="submit" name="delete_all" value="Delete All Records" onclick="return confirm('Are you sure you want to delete all records?')">
+    </form>
+
+    <form method="POST" action="">
+        <table border="1">
+            <tr>
+                <th>勾選</th>
+                <th>類別(Category)</th>
+                <th>金額(Amount)</th>
+                <th>描述(Description)</th>
+                <th>日期(Record Date)</th>
+                <th>創建時間(Created At)</th>
+                <th>動作</th>
+            </tr>
+            <?php while ($row = mysqli_fetch_assoc($records)) : ?>
+            <tr>
+                <td><input type="checkbox" name="delete_ids[]" value="<?php echo $row['id']; ?>"></td>
+                <td><?php echo $row['category_name']; ?></td>
+                <td><?php echo $row['amount']; ?></td>
+                <td><?php echo $row['description']; ?></td>
+                <td><?php echo $row['record_date']; ?></td>
+                <td><?php echo $row['created_at']; ?></td>
+                <td>
+                    <a href="edit_records.php?edit_id=<?php echo $row['id']; ?>">Edit</a>
+                    <!-- 刪除改用勾選 -->
+                    <!-- <a href="view_records.php?delete_id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this record?')">Delete</a> -->
+                </td>
+            </tr>
+            <?php endwhile; ?>
+        </table>
+        <input type="submit" name="delete_selected" value="刪除所選紀錄" onclick="return confirm('Are you sure you want to delete selected records?')">
+    </form>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script> -->
 </body>
 </html>
+
+<!-- -->
+
+<?php
+

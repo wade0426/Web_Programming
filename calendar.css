@@ -19,7 +19,7 @@ body {
     text-align: center;
     background-color: #f2f2f2;
     padding: 10px;
-    margin: 0 0% 0 37.5%;
+    /* margin: 0; */
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -51,7 +51,7 @@ body {
 .calendar-grid div.selected {
     background-color: #ffa500;
     color: white;
-    border-radius: 50%; 
+    border-radius: 50%;
 }
 
 .date-info {
