@@ -62,31 +62,64 @@
         <li><a href="#" class="menu">幫助</a></li>
         <li><a href="logout.php" class="menu">登出</a></li>
     </ul> -->
-    <div class="c_center">
-        <h2>新增消費紀錄</h2>
-        <form method="POST" action="">
-            Category: 
-            <select name="category_id" required>
-                <?php while ($row = mysqli_fetch_assoc($categories)) : ?>
-                    <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
-                <?php endwhile; ?>
-            </select><br>
-            Amount: <input type="number" step="1" name="amount" required><br>
-            Description: <input type="text" name="description"><br>
-            Record Date: <input type="date" name="record_date" required><br>
-            <input type="submit" value="Add Record">
-        </form>
-    
-        <h2>新增類別</h2>
-        <form method="POST" action="">
-            Category Name: <input type="text" name="new_category_name" required><br>
-            Category Type: 
-            <select name="new_category_type" required>
-                <option value="expense">Expense</option>
-                <option value="income">Income</option>
-            </select><br>
-            <input type="submit" value="Add Category">
-        </form>
+    <div class="container">
+        <div class="from">
+            <div class="row">
+                <h2>新增消費紀錄</h2>
+            </div>
+            <div class="row">
+                <div class="category">
+                    <p class="title">Category:</p>       
+                    <select name="category_id" required>
+                        <?php while ($row = mysqli_fetch_assoc($categories)) : ?>
+                            <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+                        <?php endwhile; ?>
+                    </select><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="amount">
+                    <p class="title">Amount:</p>
+                    <input type="number" step="1" name="amount" required><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="description">
+                    <p class="title">Description:</p>
+                    <input type="text" name="description"><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="record_date">
+                    <p class="title">Record Date:</p>
+                    <input type="date" name="record_date" required><br>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Add Record" class="button">
+            </div>
+            <div class="row">
+                <h2>新增類別</h2>
+            </div>
+            <div class="row">
+                <div class="name">
+                    <p class="title">Category Name:</p>
+                    <input type="text" name="new_category_name" required><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="type">
+                    <p class="title">Category Type:</p>
+                    <select name="new_category_type" required>
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select><br>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Add Category" class="button">
+            </div>
+        </div>
     </div>
 </body>
 </html>
