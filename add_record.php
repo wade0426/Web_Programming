@@ -72,7 +72,7 @@ $categories = mysqli_query($link, $category_query);
             <form action="" method="POST">
                 <div class="row">
                     <div class="category">
-                        <p class="title">Category:</p>
+                        <p class="title">類別：</p>
                         <select name="category_id" required>
                             <?php while ($row = mysqli_fetch_assoc($categories)) : ?>
                                 <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
@@ -82,24 +82,24 @@ $categories = mysqli_query($link, $category_query);
                 </div>
                 <div class="row">
                     <div class="amount">
-                        <p class="title">Amount:</p>
-                        <input type="number" step="1" name="amount" required><br>
+                        <p class="title">金額：</p>
+                        <input type="number" step="1" name="amount" min="0" required></input><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="description">
-                        <p class="title">Description:</p>
+                        <p class="title">描述：</p>
                         <input type="text" name="description"><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="record_date">
-                        <p class="title">Record Date:</p>
+                        <p class="title">時間：</p>
                         <input type="date" name="record_date" required><br>
                     </div>
                 </div>
                 <div class="row">
-                    <input type="submit" value="Add Record" class="button">
+                    <input type="submit" value="新增紀錄" class="button">
                 </div>
             </form>
             <form action="" method="POST">
@@ -108,21 +108,21 @@ $categories = mysqli_query($link, $category_query);
                 </div>
                 <div class="row">
                     <div class="name">
-                        <p class="title">Category Name:</p>
+                        <p class="title">類別名稱：</p>
                         <input type="text" name="new_category_name" required><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="type">
-                        <p class="title">Category Type:</p>
+                        <p class="title">類別類型：</p>
                         <select name="new_category_type" required>
-                            <option value="expense">Expense</option>
-                            <option value="income">Income</option>
+                            <option value="expense">支出</option>
+                            <option value="income">收入</option>
                         </select><br>
                     </div>
                 </div>
                 <div class="row">
-                    <input type="submit" value="Add Category" class="button">
+                    <input type="submit" value="新增類別" class="button">
                 </div>
             </form>
         </div>
