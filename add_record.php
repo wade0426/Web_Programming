@@ -10,7 +10,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>新增紀錄</title>
     <link rel="stylesheet" href="nav.css">
 </head>
 <?php
@@ -22,6 +22,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // 判斷是新增類別還是新增記錄
     if (isset($_POST['new_category_name']) && isset($_POST['new_category_type'])) {
         // 添加新類別
         $new_category_name = mysqli_real_escape_string($link, $_POST['new_category_name']);
@@ -36,11 +37,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // 添加新記錄
         $user_id = $_SESSION['user_id'];
+        // mysqli_real_escape_string() 防止 SQL 注入攻擊
         $category_id = mysqli_real_escape_string($link, $_POST['category_id']);
         $amount = mysqli_real_escape_string($link, $_POST['amount']);
         $description = mysqli_real_escape_string($link, $_POST['description']);
         $record_date = mysqli_real_escape_string($link, $_POST['record_date']);
-
+        print_r($_POST);
+        // 去看資料庫 SELECT * FROM `categories` WHERE `id` = $_POST[category_id] => 是 expense 還是 income;
+        $category_id = mysqli_real_escape_string($link, $_POST['category_id']);
+        $category_query = "SELECT * FROM categories WHERE id = '$category_id'";
+        $category_result = mysqli_query($link, $category_query);
+        $category = mysqli_fetch_assoc($category_result);
+        // 判斷是支出還是收入 支出加負號
+        if ($category['type'] == 'expense') {
+            $amount = -abs($amount);
+        } else {
+            $amount = abs($amount);
+        }
         $record_query = "INSERT INTO records (user_id, category_id, amount, description, record_date) 
                             VALUES ('$user_id', '$category_id', '$amount', '$description', '$record_date')";
 
