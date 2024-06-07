@@ -68,6 +68,7 @@ $categories = mysqli_query($link, $category_query);
             <div class="row">
                 <h2>新增消費紀錄</h2>
             </div>
+            <!-- 請記得不要刪form表單!! -->
             <form action="" method="POST">
                 <div class="row">
                     <div class="category">
