@@ -19,7 +19,7 @@
     <?php if (isset($_SESSION['user_id'])): ?>
         <li><a href="logout.php" class="menu">登出</a></li>
     <?php else: ?>
-        <li><a href="login.php">Login</a></li>
-        <li><a href="register.php">Register</a></li>
+        <li><a href="login.php" class="menu">登入</a></li>
+        <!-- <li><a href="register.php" class="menu">Register</a></li> -->
     <?php endif; ?>
 </ul>
