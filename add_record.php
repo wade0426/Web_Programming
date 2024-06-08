@@ -18,6 +18,7 @@ include 'db.php';
 include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
+    include 'show_error.php';
     die("Please login first.");
 }
 
