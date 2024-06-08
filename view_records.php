@@ -252,13 +252,18 @@ $records = mysqli_query($link, $query);
 
   // 選擇刪除
   if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_selected'])) {
-    $delete_ids = implode(",", $_POST['delete_ids']);
-    $delete_selected_query = "DELETE FROM records WHERE id IN ($delete_ids) AND user_id='$user_id'";
+    // 使用者沒有選擇紀錄就按下刪除按鈕，會導致錯誤 在這裡捕捉錯誤
+    if (isset($_POST['delete_ids']) && !empty($_POST['delete_ids'])) {
+      $delete_ids = implode(",", $_POST['delete_ids']);
+      $delete_selected_query = "DELETE FROM records WHERE id IN ($delete_ids) AND user_id='$user_id'";
 
-    if (mysqli_query($link, $delete_selected_query)) {
-      echo "Selected records deleted successfully!";
+      if (mysqli_query($link, $delete_selected_query)) {
+        echo "所選紀錄已成功刪除！";
+      } else {
+        echo "Error: " . mysqli_error($link);
+      }
     } else {
-      echo "Error: " . mysqli_error($link);
+      // echo "請選擇要刪除的紀錄！";
     }
   }
 
@@ -271,9 +276,7 @@ $records = mysqli_query($link, $query);
   $records = mysqli_query($link, $query);
   ?>
 
-  <form method="POST" action="">
-    <input type="submit" name="delete_all" value="Delete All Records" onclick="return confirm('Are you sure you want to delete all records?')">
-  </form>
+
 
   <form method="POST" action="">
     <table border="1">
@@ -302,7 +305,10 @@ $records = mysqli_query($link, $query);
         </tr>
       <?php endwhile; ?>
     </table>
-    <input type="submit" name="delete_selected" value="刪除所選紀錄" onclick="return confirm('Are you sure you want to delete selected records?')">
+    <input type="submit" name="delete_selected" value="刪除所選紀錄" onclick="return confirm('您確定要刪除所選紀錄嗎？(此操作不可回復)')">
+    <input type="submit" name="delete_all" value="刪除所有紀錄" onclick="return confirm('您確定要刪除所有紀錄嗎？(此操作不可回復)')">
+  </form>
+  <form method="POST" action="">
   </form>
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script> -->
 </body>
