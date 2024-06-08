@@ -8,7 +8,8 @@ include 'db.php';
 include 'navbar.php';
 
 if (!isset($_SESSION['user_id'])) {
-    include 'show_error.php';
+    include 'show_alert.php';
+    show_error();
     die("Please login first.");
 }
 
