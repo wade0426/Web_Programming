@@ -25,7 +25,7 @@ function show_error()
                 </div>
                 <div class="modal-footer">
                     <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button> -->
-                    <button type="button" class="btn btn-primary" onclick="window.location.href = "login.php";">登入</button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href = \'login.php\';">登入</button>
                 </div>
             </div>
         </div>
@@ -41,6 +41,19 @@ function show_error()
     </script>
 </body>
 ';
+}
+?>
+
+<?php
+function show_message_danger($message1, $message2, $link)
+{
+    echo '
+    <body>
+    <div class="alert alert-danger" role="alert" style="text-align: center;">
+        ' . $message1 . '<a href="'. $link .'" class="alert-link">'. $message2 . '</a>。
+    </div>
+    </body>
+    ';
 }
 ?>
 

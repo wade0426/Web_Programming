@@ -20,7 +20,9 @@ include 'navbar.php';
 if (!isset($_SESSION['user_id'])) {
     include 'show_alert.php';
     show_error();
-    die("Please login first.");
+    show_message_danger("請先登入!!! ", "登入", "login.php");
+    // die("Please login first.");
+    die();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
