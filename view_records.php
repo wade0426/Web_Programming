@@ -11,7 +11,6 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>主頁</title>
   <link rel="stylesheet" href="view_records.css">
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous"> -->
 </head>
 <style>
 </style>
@@ -23,15 +22,7 @@ if (!isset($_SESSION['user_id'])) {
   include 'show_error.php';
   die("Please login first.");
 }
-
 $user_id = $_SESSION['user_id'];
-$query = "SELECT records.*, categories.name AS category_name 
-          FROM records 
-          JOIN categories ON records.category_id = categories.id 
-          WHERE user_id='$user_id'
-          ORDER BY record_date DESC";
-
-$records = mysqli_query($link, $query);
 ?>
 
 <body>
@@ -229,14 +220,81 @@ $records = mysqli_query($link, $query);
 
   <!--  -->
 
+
+
   <?php
+  // 初始值 沒有會出錯
+  $offset = 0;
 
-  // include 'db.php';
+  if (isset($_GET['selectpage']) && $_GET['selectpage'] === "All") {
+    // 每頁顯示的記錄數 為 All 顯示所有記錄
+    $recordsPerPage = "All";
+    $totalPages = 0;
+  } else {
+    // 每頁顯示的記錄數 預設為 10
+    $recordsPerPage = isset($_GET['selectpage']) ? intval($_GET['selectpage']) : 10;
 
-  // if (!isset($_SESSION['user_id'])) {
-  //     die("Please login first.");
+    // 計算總記錄數
+    $countQuery = "SELECT COUNT(*) AS total FROM records WHERE user_id='$user_id'";
+    $countResult = mysqli_query($link, $countQuery);
+    $totalRecords = mysqli_fetch_assoc($countResult)['total'];
+
+    // 計算總頁數
+    $totalPages = ceil($totalRecords / $recordsPerPage);
+
+    // 當前頁數
+    $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+    // 確保當前頁數在有效範圍內
+    if ($currentPage < 1) {
+      $currentPage = 1;
+    } elseif ($currentPage > $totalPages) {
+      $currentPage = $totalPages;
+    }
+
+    // 計算 SQL 查詢的 OFFSET
+    $offset = ($currentPage - 1) * $recordsPerPage;
+  }
+
+  // 查詢記錄，包含分頁
+  $query = "SELECT records.*, categories.name AS category_name 
+          FROM records 
+          JOIN categories ON records.category_id = categories.id 
+          WHERE user_id='$user_id'
+          ORDER BY record_date DESC";
+
+  // 轉換 recordsPerPage 為整數 傳入的變數無法轉換為整數，intval 函數將返回 0 (all)
+  $recordsPerPage = intval($recordsPerPage);
+  // 如果 recordsPerPage 為 0 或負數，則不使用 LIMIT
+  if ($recordsPerPage > 0) {
+    $query .= " LIMIT $offset, $recordsPerPage";
+  }
+
+  // 測試用
+  // echo $query;
+
+  $records = mysqli_query($link, $query);
+
+  // 顯示記錄
+  // while ($row = mysqli_fetch_assoc($records)) {
+  //   echo "<div>";
+  //   echo "Category: " . $row['category_name'] . "<br>";
+  //   echo "Amount: " . $row['amount'] . "<br>";
+  //   echo "Description: " . $row['description'] . "<br>";
+  //   echo "Record Date: " . $row['record_date'] . "<br>";
+  //   echo "Created At: " . $row['created_at'] . "<br>";
+  //   echo "</div><hr>";
   // }
 
+  // 顯示分頁鏈接
+  // 暫時測試(移到下方程式了)
+  // for ($i = 1; $i <= $totalPages; $i++) {
+  //   echo "<a href='view_records.php?page=$i&selectpage=$recordsPerPage'>$i</a> ";
+  // }
+  ?>
+
+
+  <?php
   $user_id = $_SESSION['user_id'];
 
   // 刪除全部
@@ -267,16 +325,33 @@ $records = mysqli_query($link, $query);
     }
   }
 
-  $query = "SELECT records.*, categories.name AS category_name 
-              FROM records 
-              JOIN categories ON records.category_id = categories.id 
-              WHERE user_id='$user_id'
-              ORDER BY record_date DESC";
+  // 舊版查詢(沒加分頁)
+  // $query = "SELECT records.*, categories.name AS category_name 
+  //             FROM records 
+  //             JOIN categories ON records.category_id = categories.id 
+  //             WHERE user_id='$user_id'
+  //             ORDER BY record_date DESC";
 
-  $records = mysqli_query($link, $query);
+  // $records = mysqli_query($link, $query);
   ?>
 
+  <!-- 顯示筆數 -->
+  <form id="frmpage" method="get">
+    每頁顯示筆數：
+    <select name="selectpage" onchange="document.getElementById('frmpage').submit()">
+      <option value="All" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == "All") echo 'selected'; ?>>All</option>
+      <option value="5" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 5) echo 'selected'; ?>>5</option>
+      <option value="10" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 10) echo 'selected'; ?>>10</option>
+      <option value="20" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 20) echo 'selected'; ?>>20</option>
+      <option value="50" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 50) echo 'selected'; ?>>50</option>
+    </select>
+    <?php
+    // echo print_r($_GET);
+    ?>
+  </form>
 
+
+  <br><br>
 
   <form method="POST" action="">
     <table border="1">
@@ -305,16 +380,54 @@ $records = mysqli_query($link, $query);
         </tr>
       <?php endwhile; ?>
     </table>
+
+    <!-- 顯示分頁 -->
+    <?php
+    // 舊版分頁(棄用)
+    // $totalRecords = mysqli_num_rows($records);
+    // $perPage = isset($_GET['selectpage']) ? $_GET['selectpage'] : 10;
+    // $totalPages = ceil($totalRecords / $perPage);
+    // $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+    // $start = ($currentPage - 1) * $perPage;
+    // $end = $start + $perPage - 1;
+    ?>
+
+    <!-- 顯示分頁鏈接(使用for迴圈) -->
+    <!-- $totalPages == 0 不顯示 nav 以防使用者點到上一頁按鈕 -->
+    <nav name="per_page" id="per_page" <?php if ($totalPages == 0) echo 'style="display: none;"'; ?>>
+      <ul class="pagination" style="display: flex; justify-content: center;">
+        <li style="list-style: none;">
+          <!-- 上一頁 -->
+          <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <!-- 顯示分頁鏈接(使用for迴圈) -->
+        <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+          <li style="list-style: none;"><a class="page-link" href="?page=<?php echo $i . '&selectpage=' . $recordsPerPage; ?>"><?php echo $i; ?></a></li>
+          <!-- http://localhost:8080/Web_Programming/Project/git/Web_Programming/view_records.php?page=1&selectpage=10 -->
+          <!-- http://localhost:8080/Web_Programming/Project/git/Web_Programming/view_records.php?page=1 -->
+        <?php endfor; ?>
+        <li style="list-style: none;">
+          <!-- 下一頁 -->
+          <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- 為了方便就寫在這了(一定會找不到www) -->
+    <style>
+      .pagination li {
+        margin: 0 5px;
+      }
+    </style>
+    <!-- 顯示分頁 -->
+
+    <!-- <br> -->
     <input type="submit" name="delete_selected" value="刪除所選紀錄" onclick="return confirm('您確定要刪除所選紀錄嗎？(此操作不可回復)')">
     <input type="submit" name="delete_all" value="刪除所有紀錄" onclick="return confirm('您確定要刪除所有紀錄嗎？(此操作不可回復)')">
   </form>
-  <form method="POST" action="">
-  </form>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script> -->
 </body>
 
 </html>
-
-<!-- -->
-
-<?php
