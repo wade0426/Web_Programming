@@ -240,7 +240,7 @@ $user_id = $_SESSION['user_id'];
     $recordsPerPage = "All";
     $totalPages = 0;
   } else {
-    // 每頁顯示的記錄數 預設為 10 ， 修正為預設為All 這行應註解掉。
+    // 每頁顯示的記錄數 預設為 10 ， 修正為預設為All。
     $recordsPerPage = isset($_GET['selectpage']) ? intval($_GET['selectpage']) : 10;
 
     // 計算總記錄數
