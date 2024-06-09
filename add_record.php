@@ -115,7 +115,8 @@ $categories = mysqli_query($link, $category_query);
                 <div class="row">
                     <div class="record_date">
                         <p class="title">時間：</p>
-                        <input type="date" name="record_date" required><br>
+                        <!-- 設定預設值為今天的日期 -->
+                        <input type="date" name="record_date" value="<?php echo date('Y-m-d'); ?>" required><br>
                     </div>
                 </div>
                 <div class="row">
