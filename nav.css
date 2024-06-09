@@ -1,15 +1,17 @@
-*{
+* {
   box-sizing: border-box;
   position: relative;
 }
 
+/* original  */
 body {
   margin: 0;
   padding: 0;
   /* background: #333; */
   font-family: Arial, sans-serif;
 }
-h2{
+
+h2 {
   font-size: 35px;
   line-height: 40px;
 }
@@ -29,7 +31,8 @@ h2{
   display: grid;
   place-content: center;
   margin: 0;
-  position: relative; /* 需要為 ::before 設置相對定位的父元素 */
+  position: relative;
+  /* 需要為 ::before 設置相對定位的父元素 */
 }
 
 .nav .menu {
@@ -48,7 +51,8 @@ h2{
   background: #fff;
   border-radius: 5px;
   transform: scaleX(0);
-  transition: all 0.5s ease; /* 修正 transition duration */
+  transition: all 0.5s ease;
+  /* 修正 transition duration */
   bottom: 0;
   left: 0;
 }
@@ -68,15 +72,18 @@ h2{
   text-align: center;
 
 }
-.row{
+
+.container .row {
   margin: 0 20px;
 }
-.row:after{
+
+.container .row:after {
   content: ' ';
   display: block;
   clear: both;
 }
-.from{
+
+.from {
   display: inline-block;
   text-align: left;
 
@@ -89,24 +96,27 @@ h2{
 
   box-shadow: 5px 5px #000000;
 }
-.title{
+
+.title {
   font-size: 20px;
   line-height: 30px;
   margin-bottom: 10px;
   display: inline;
 }
-.button{
+
+.container .button {
   background: #8d8d8d;
   color: #fff;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 10px ;
+  margin: 10px;
   box-shadow: 2px 2px #000000;
 
   transition: all 0.3s ease;
 }
-.button:hover{
+
+.container .button:hover {
   background: #636363;
 }

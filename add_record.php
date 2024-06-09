@@ -46,7 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $amount = mysqli_real_escape_string($link, $_POST['amount']);
         $description = mysqli_real_escape_string($link, $_POST['description']);
         $record_date = mysqli_real_escape_string($link, $_POST['record_date']);
-        print_r($_POST);
+        // 測試用
+        // print_r($_POST);
         // 去看資料庫 SELECT * FROM `categories` WHERE `id` = $_POST[category_id] => 是 expense 還是 income;
         $category_id = mysqli_real_escape_string($link, $_POST['category_id']);
         $category_query = "SELECT * FROM categories WHERE id = '$category_id'";
@@ -62,7 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             VALUES ('$user_id', '$category_id', '$amount', '$description', '$record_date')";
 
         if (mysqli_query($link, $record_query)) {
-            echo "Record added successfully!";
+            include 'show_alert.php';
+            show_toasts_success("成功新增一筆紀錄！");
+            // echo "Record added successfully!";
         } else {
             echo "Error: " . mysqli_error($link);
         }

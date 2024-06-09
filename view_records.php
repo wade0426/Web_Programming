@@ -22,6 +22,7 @@ if (!isset($_SESSION['user_id'])) {
   include 'show_alert.php';
   show_error();
   show_message_danger("請先登入!!! ", "登入", "login.php");
+
   // die("Please login first.");
   die();
 }
