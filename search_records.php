@@ -70,8 +70,7 @@ $total_amount = 0;
             // 保留使用者搜尋設定
             if (isset($_GET['category_id']) && $_GET['category_id'] === $row['id']) {
                 echo '<option value=' . $row['id'] . ' selected>' . $row['name'] . '</option>';
-            }
-            else {
+            } else {
                 echo '<option value=' . $row['id'] . '>' . $row['name'] . '</option>';
             }
             ?>
@@ -117,4 +116,7 @@ $total_amount = 0;
     <?php endwhile; ?>
 </table>
 
-<h3>總金額(Total Amount): <?php echo $total_amount; ?>&nbsp元</h3>
+<h3>
+    總金額(Total Amount): <?php echo $total_amount; ?>&nbsp元，共<?php echo mysqli_num_rows($records); ?>筆紀錄。
+    <?php echo mysqli_num_rows($categories); ?>種類別。
+</h3>

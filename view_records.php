@@ -230,12 +230,17 @@ $user_id = $_SESSION['user_id'];
   // 初始值 沒有會出錯
   $offset = 0;
 
+  // 預設顯示所有記錄
+  if (!isset($_GET['selectpage'])) {
+    $_GET['selectpage'] = "All";
+  }
+
   if (isset($_GET['selectpage']) && $_GET['selectpage'] === "All") {
     // 每頁顯示的記錄數 為 All 顯示所有記錄
     $recordsPerPage = "All";
     $totalPages = 0;
   } else {
-    // 每頁顯示的記錄數 預設為 10
+    // 每頁顯示的記錄數 預設為 10 ， 修正為預設為All 這行應註解掉。
     $recordsPerPage = isset($_GET['selectpage']) ? intval($_GET['selectpage']) : 10;
 
     // 計算總記錄數
@@ -427,7 +432,8 @@ $user_id = $_SESSION['user_id'];
       }
     </style>
     <!-- 顯示分頁 -->
-
+    <!-- 測試筆數 -->
+    <!-- <h3>有 <?php echo mysqli_num_rows($records); ?> 筆紀錄</h3> -->
     <!-- <br> -->
     <input type="submit" name="delete_selected" value="刪除所選紀錄" onclick="return confirm('您確定要刪除所選紀錄嗎？(此操作不可回復)')">
     <input type="submit" name="delete_all" value="刪除所有紀錄" onclick="return confirm('您確定要刪除所有紀錄嗎？(此操作不可回復)')">
