@@ -10,6 +10,7 @@ session_start();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>主頁</title>
+  <!-- 其實就是 @import "calendar.css"; -->
   <link rel="stylesheet" href="view_records.css">
 </head>
 <style>
@@ -45,25 +46,29 @@ $user_id = $_SESSION['user_id'];
   <hr><br>
 
   <!-- 日曆 -->
-  <div class="calendar">
-    <div class="calendar-header">
-      <button id="prev-month">&#8249;</button>
-      <div>
-        <select id="year-select"></select>
-        <select id="month-select"></select>
+  <div class="container">
+    <div class="row">
+      <div class="calendar">
+        <div class="calendar-header">
+          <button id="prev-month" class="mButton">&#8249;</button>
+          <div>
+            <select id="year-select"></select>
+            <select id="month-select"></select>
+          </div>
+          <button id="next-month" class="mButton">&#8250;</button>
+        </div>
+        <div class="calendar-grid">
+          <div>S</div>
+          <div>M</div>
+          <div>T</div>
+          <div>W</div>
+          <div>T</div>
+          <div>F</div>
+          <div>S</div>
+        </div>
+        <div class="date-info"></div>
       </div>
-      <button id="next-month">&#8250;</button>
     </div>
-    <div class="calendar-grid">
-      <div>S</div>
-      <div>M</div>
-      <div>T</div>
-      <div>W</div>
-      <div>T</div>
-      <div>F</div>
-      <div>S</div>
-    </div>
-    <div class="date-info"></div>
   </div>
 
   <script>
@@ -230,9 +235,10 @@ $user_id = $_SESSION['user_id'];
   // 初始值 沒有會出錯
   $offset = 0;
 
-  // 預設顯示所有記錄
+  // 預設顯示10筆記錄
   if (!isset($_GET['selectpage'])) {
-    $_GET['selectpage'] = "All";
+    // $_GET['selectpage'] = "All";
+    $_GET['selectpage'] = 10;
   }
 
   if (isset($_GET['selectpage']) && $_GET['selectpage'] === "All") {
@@ -240,7 +246,7 @@ $user_id = $_SESSION['user_id'];
     $recordsPerPage = "All";
     $totalPages = 0;
   } else {
-    // 每頁顯示的記錄數 預設為 10 ， 修正為預設為All。
+    // 每頁顯示的記錄數 預設為 10 ， 修正為預設為All。 修正為10
     $recordsPerPage = isset($_GET['selectpage']) ? intval($_GET['selectpage']) : 10;
 
     // 計算總記錄數
@@ -352,6 +358,7 @@ $user_id = $_SESSION['user_id'];
       <option value="5" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 5) echo 'selected'; ?>>5</option>
       <option value="10" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 10) echo 'selected'; ?>>10</option>
       <option value="20" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 20) echo 'selected'; ?>>20</option>
+      <option value="30" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 30) echo 'selected'; ?>>30</option>
       <option value="50" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 50) echo 'selected'; ?>>50</option>
     </select>
     <?php
@@ -407,19 +414,22 @@ $user_id = $_SESSION['user_id'];
       <ul class="pagination" style="display: flex; justify-content: center;">
         <li style="list-style: none;">
           <!-- 上一頁 -->
-          <a class="page-link" href="?page=<?php echo $currentPage - 1; ?>" aria-label="Previous">
+          <!-- 如果是第一頁不要生成 用if看總頁數 -->
+          <a class="page-link" href="?page=<?php echo $currentPage - 1 . '&selectpage=' . $recordsPerPage; ?>" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
         <!-- 顯示分頁鏈接(使用for迴圈) -->
         <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+          <!-- 如果是當前頁數 用CSS改一下格式 讓使用者知道第幾頁 -->
           <li style="list-style: none;"><a class="page-link" href="?page=<?php echo $i . '&selectpage=' . $recordsPerPage; ?>"><?php echo $i; ?></a></li>
           <!-- http://localhost:8080/Web_Programming/Project/git/Web_Programming/view_records.php?page=1&selectpage=10 -->
           <!-- http://localhost:8080/Web_Programming/Project/git/Web_Programming/view_records.php?page=1 -->
         <?php endfor; ?>
         <li style="list-style: none;">
           <!-- 下一頁 -->
-          <a class="page-link" href="?page=<?php echo $currentPage + 1; ?>" aria-label="Next">
+          <!-- 如果到最後一頁不要生成 用if看總頁數 -->
+          <a class="page-link" href="?page=<?php echo $currentPage + 1 . '&selectpage=' . $recordsPerPage; ?>" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>

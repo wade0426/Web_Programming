@@ -109,6 +109,7 @@
                                 <input class="flip-card__input" name="username" placeholder="UserName" type="text" required>
                                 <input class="flip-card__input" name="password" placeholder="Password" type="password" required>
                                 <button type="submit" class="flip-card__btn" name="login">登入</button>
+                                <a href="" class="flip-card__link" onclick="forgetPassword()">忘記密碼?</a>
                             </form>
                         </div>
                     <div class="flip-card__back">
@@ -126,4 +127,9 @@
         </div>
     </div>
 </body>
+<script>
+    function forgetPassword() {
+        alert("忘記密碼? 在註冊一個啊 跟錢有關還敢忘啊?");
+    }
+</script>
 </html>
