@@ -98,12 +98,28 @@ $user_id = $_SESSION['user_id'];
       monthSelect.add(option);
     }
 
-    // 設定初始年份和月份
-    yearSelect.value = currentYear;
-    monthSelect.value = currentMonth;
-
-    // 渲染月曆
-    renderCalendar(currentYear, currentMonth);
+    // 判斷是否有網址參數 (有的話就用網址參數的年月日)
+    if (window.location.search.includes('_')) {
+      const urlParams = window.location.search.split('=')[1].split('_'); // 2024 6 6
+      const urlYear = parseInt(urlParams[0]);
+      const urlMonth = parseInt(urlParams[1]);
+      const urlDate = parseInt(urlParams[2]);
+      // 輸出
+      renderCalendar(urlYear, urlMonth - 1); //記得減1
+      console.log(urlYear, urlMonth, urlDate);
+      currentYear = urlYear;
+      currentMonth = urlMonth - 1; //記得減1
+      yearSelect.value = urlYear;
+      monthSelect.value = urlMonth - 1; //記得減1
+    } else {
+      // 設定初始年份和月份
+      // 設定下拉選單的值
+      yearSelect.value = currentYear; // let currentYear = today.getFullYear();
+      // 設定下拉選單的值
+      monthSelect.value = currentMonth; // currentMonth 記得 -1
+      // 渲染月曆
+      renderCalendar(currentYear, currentMonth);
+    }
 
     // 監聽年份和月份變更
     yearSelect.addEventListener('change', updateCalendar);
@@ -139,13 +155,31 @@ $user_id = $_SESSION['user_id'];
             const day = document.createElement('div');
             day.textContent = date;
             day.addEventListener('click', selectDate);
-
-            // 今天的日期自動被點擊
-            if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
-              day.classList.add('selected');
-              dateInfo.textContent = `${year}年${month+1}月${date}日`;
+            // 先判斷是否有網址參數
+            // 判斷 window.location.search 是否有底線
+            if (!window.location.search.includes('_')) {
+              // 如果是今天就加上 selected (沒有get參數的情況下)
+              // 今天的日期自動被點擊
+              if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
+                day.classList.add('selected');
+                dateInfo.textContent = `${year}年${month+1}月${date}日`;
+              }
+            } else if (window.location.search.includes('_')) {
+              // 必須執行，不可刪除。
+              const urlParams = window.location.search.split('=')[1].split('_'); // 2024 6 6
+              const urlYear = parseInt(urlParams[0]);
+              const urlMonth = parseInt(urlParams[1]);
+              const urlDate = parseInt(urlParams[2]);
+              // 輸出
+              console.log(urlYear, urlMonth, urlDate); //這裡執行多次，因為有多個日期，所以要判斷
+              // 如果年月日相同就加上 selected
+              if (urlYear === year && urlMonth === month + 1 && urlDate === date) {
+                // console.log('selected');
+                day.classList.add('selected');
+                dateInfo.textContent = `${year}年${month+1}月${date}日`;
+              }
+              // renderCalendar(year, month);
             }
-
             calendarGrid.appendChild(day);
             date++;
           }
@@ -153,6 +187,7 @@ $user_id = $_SESSION['user_id'];
       }
     }
 
+    // 更新日曆的顯示
     function updateCalendar() {
       const selectedYear = parseInt(yearSelect.value);
       const selectedMonth = parseInt(monthSelect.value);
@@ -162,18 +197,25 @@ $user_id = $_SESSION['user_id'];
       dateInfo.textContent = '';
     }
 
+    // 選擇日期的事件處理函式
     function selectDate(event) {
       const selectedDate = event.target;
       const allDates = calendarGrid.querySelectorAll('div:not(:nth-child(-n+7))');
+      // 移除所有日期的 selected 樣式
       allDates.forEach(date => date.classList.remove('selected'));
+      // 為選擇的日期添加 selected 樣式
       selectedDate.classList.add('selected');
-
+      // 取得選擇的日期
       const year = currentYear;
       const month = currentMonth + 1;
       const day = selectedDate.textContent;
-      const formattedDate = `${year}年${month}月${day}日`;
-      dateInfo.textContent = formattedDate;
-      console.log(formattedDate); //顯示選擇的日期
+      const formattedDate = `${year}_${month}_${day}`;
+      const show_formattedDate = `${year}年${month}月${day}日`;
+      // 更新日期顯示
+      dateInfo.textContent = show_formattedDate;
+      // console.log(formattedDate);
+      // 將 formattedDate 傳到後端給 PHP 處理，顯示選擇日期的紀錄
+      window.location.href = `view_records.php?date=${formattedDate}`;
     }
 
     function prevMonth() {
@@ -202,7 +244,6 @@ $user_id = $_SESSION['user_id'];
   </script>
 
   <!-- 日曆 -->
-
   <br>
   <hr><br>
 
@@ -228,8 +269,6 @@ $user_id = $_SESSION['user_id'];
     */ ?>
 
   <!--  -->
-
-
 
   <?php
   // 初始值 沒有會出錯
@@ -271,12 +310,30 @@ $user_id = $_SESSION['user_id'];
     $offset = ($currentPage - 1) * $recordsPerPage;
   }
 
-  // 查詢記錄，包含分頁
-  $query = "SELECT records.*, categories.name AS category_name 
+  // 使用get方法取得日期 讓選到的日期顯示紀錄
+  if (isset($_GET['date'])) {
+    $date = $_GET['date'];
+    $date = explode("_", $date);
+    $year = $date[0];
+    $month = $date[1];
+    $day = $date[2];
+    // echo $year . "年" . $month . "月" . $day . "日";
+    $query = "SELECT records.*, categories.name AS category_name 
           FROM records 
-          JOIN categories ON records.category_id = categories.id 
-          WHERE user_id='$user_id'
+          JOIN categories ON records.category_id = categories.id
+          -- WHERE user_id='$user_id' AND `record_date` = '2021-6-6' 讓選到的日期顯示紀錄
+          WHERE user_id='$user_id' AND `record_date` = '" . $year . "-" . $month . "-" . $day . "'
           ORDER BY record_date DESC";
+  } else {
+    // 查詢記錄，包含分頁
+    $query = "SELECT records.*, categories.name AS category_name 
+    FROM records 
+    JOIN categories ON records.category_id = categories.id
+    -- WHERE user_id='$user_id' AND `record_date` = '2021-6-6' 讓選到的日期顯示紀錄
+    WHERE user_id='$user_id'
+    ORDER BY record_date DESC";
+  }
+
 
   // 轉換 recordsPerPage 為整數 傳入的變數無法轉換為整數，intval 函數將返回 0 (all)
   $recordsPerPage = intval($recordsPerPage);
@@ -285,29 +342,9 @@ $user_id = $_SESSION['user_id'];
     $query .= " LIMIT $offset, $recordsPerPage";
   }
 
-  // 測試用
-  // echo $query;
-
   $records = mysqli_query($link, $query);
 
-  // 顯示記錄
-  // while ($row = mysqli_fetch_assoc($records)) {
-  //   echo "<div>";
-  //   echo "Category: " . $row['category_name'] . "<br>";
-  //   echo "Amount: " . $row['amount'] . "<br>";
-  //   echo "Description: " . $row['description'] . "<br>";
-  //   echo "Record Date: " . $row['record_date'] . "<br>";
-  //   echo "Created At: " . $row['created_at'] . "<br>";
-  //   echo "</div><hr>";
-  // }
-
-  // 顯示分頁鏈接
-  // 暫時測試(移到下方程式了)
-  // for ($i = 1; $i <= $totalPages; $i++) {
-  //   echo "<a href='view_records.php?page=$i&selectpage=$recordsPerPage'>$i</a> ";
-  // }
   ?>
-
 
   <?php
   $user_id = $_SESSION['user_id'];
@@ -354,12 +391,12 @@ $user_id = $_SESSION['user_id'];
   <form id="frmpage" method="get">
     每頁顯示筆數：
     <select name="selectpage" onchange="document.getElementById('frmpage').submit()">
-      <option value="All" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == "All") echo 'selected'; ?>>All</option>
       <option value="5" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 5) echo 'selected'; ?>>5</option>
       <option value="10" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 10) echo 'selected'; ?>>10</option>
       <option value="20" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 20) echo 'selected'; ?>>20</option>
       <option value="30" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 30) echo 'selected'; ?>>30</option>
       <option value="50" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == 50) echo 'selected'; ?>>50</option>
+      <option value="All" <?php if (isset($_GET['selectpage']) && $_GET['selectpage'] == "All") echo 'selected'; ?>>All</option>
     </select>
     <?php
     // echo print_r($_GET);
@@ -395,22 +432,17 @@ $user_id = $_SESSION['user_id'];
           </td>
         </tr>
       <?php endwhile; ?>
+      <?php if (mysqli_num_rows($records) == 0) : ?>
+        <tr>
+          <td colspan="7" style="text-align: center;">沒有紀錄</td>
+        </tr>
+      <?php endif; ?>
     </table>
 
-    <!-- 顯示分頁 -->
-    <?php
-    // 舊版分頁(棄用)
-    // $totalRecords = mysqli_num_rows($records);
-    // $perPage = isset($_GET['selectpage']) ? $_GET['selectpage'] : 10;
-    // $totalPages = ceil($totalRecords / $perPage);
-    // $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-    // $start = ($currentPage - 1) * $perPage;
-    // $end = $start + $perPage - 1;
-    ?>
-
     <!-- 顯示分頁鏈接(使用for迴圈) -->
+    <!-- 有$_GET['date']的話不顯示頁數 -->
     <!-- $totalPages == 0 不顯示 nav 以防使用者點到上一頁按鈕 -->
-    <nav name="per_page" id="per_page" <?php if ($totalPages == 0) echo 'style="display: none;"'; ?>>
+    <nav name="per_page" id="per_page" <?php if ($totalPages == 0 || isset($_GET['date'])) echo 'style="display: none;"'; ?>>
       <ul class="pagination" style="display: flex; justify-content: center;">
         <li style="list-style: none;">
           <!-- 上一頁 -->
