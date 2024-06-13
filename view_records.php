@@ -414,7 +414,7 @@ $user_id = $_SESSION['user_id'];
         <th>金額(Amount)</th>
         <th>描述(Description)</th>
         <th>日期(Record Date)</th>
-        <th>創建時間(Created At)</th>
+        <!-- <th>創建時間(Created At)</th> -->
         <th>動作</th>
       </tr>
       <?php while ($row = mysqli_fetch_assoc($records)) : ?>
@@ -424,7 +424,7 @@ $user_id = $_SESSION['user_id'];
           <td><?php echo $row['amount']; ?></td>
           <td><?php echo $row['description']; ?></td>
           <td><?php echo $row['record_date']; ?></td>
-          <td><?php echo $row['created_at']; ?></td>
+          <!-- <td>$row['created_at'];</td> -->
           <td>
             <a href="edit_records.php?edit_id=<?php echo $row['id']; ?>">Edit</a>
             <!-- 刪除改用勾選 -->
@@ -434,6 +434,7 @@ $user_id = $_SESSION['user_id'];
       <?php endwhile; ?>
       <?php if (mysqli_num_rows($records) == 0) : ?>
         <tr>
+          <!-- 應該要改6 -->
           <td colspan="7" style="text-align: center;">沒有紀錄</td>
         </tr>
       <?php endif; ?>
