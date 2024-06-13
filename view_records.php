@@ -443,7 +443,7 @@ $user_id = $_SESSION['user_id'];
         </tr>
       <?php endif; ?>
     </table>
-    
+
     <input type="submit" name="delete_selected" value="刪除所選紀錄" onclick="return confirm('您確定要刪除所選紀錄嗎？(此操作不可回復)')">
     <input type="submit" name="delete_all" value="刪除所有紀錄" onclick="return confirm('您確定要刪除所有紀錄嗎？(此操作不可回復)')">
 
@@ -462,8 +462,8 @@ $user_id = $_SESSION['user_id'];
         <!-- 顯示分頁鏈接(使用for迴圈) -->
         <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
           <!-- 如果是當前頁數 用CSS改一下格式 讓使用者知道第幾頁 -->
-            <!-- 加入css讓使用者能看到現在是第幾頁 用 if -->
-            <li style="list-style: none;"><a class="page-link <?php if ($i == $currentPage) echo 'current-page'; ?>" href="?page=<?php echo $i . '&selectpage=' . $recordsPerPage; ?>"><?php echo $i; ?></a></li>
+          <!-- 加入css讓使用者能看到現在是第幾頁 用 if -->
+          <li style="list-style: none;"><a class="page-link <?php if ($i == $currentPage) echo 'current-page'; ?>" href="?page=<?php echo $i . '&selectpage=' . $recordsPerPage; ?>"><?php echo $i; ?></a></li>
           <!-- http://localhost:8080/Web_Programming/Project/git/Web_Programming/view_records.php?page=1&selectpage=10 -->
           <!-- http://localhost:8080/Web_Programming/Project/git/Web_Programming/view_records.php?page=1 -->
         <?php endfor; ?>
@@ -484,9 +484,11 @@ $user_id = $_SESSION['user_id'];
         list-style: none;
         /* margin: 20px; */
       }
+
       .pagination li {
         margin: 0px 5px;
       }
+
       .page-link {
         text-decoration: none;
         color: black;
@@ -494,6 +496,7 @@ $user_id = $_SESSION['user_id'];
         border: 1px solid #ccc;
         border-radius: 5px;
       }
+
       .current-page {
         background-color: #007bff;
         color: white;
@@ -503,7 +506,7 @@ $user_id = $_SESSION['user_id'];
     <!-- 測試筆數 -->
     <!-- <h3>有 <?php echo mysqli_num_rows($records); ?> 筆紀錄</h3> -->
     <!-- <br> -->
-    
+
   </form>
 </body>
 
