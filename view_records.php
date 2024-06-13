@@ -308,6 +308,10 @@ $user_id = $_SESSION['user_id'];
 
     // 計算 SQL 查詢的 OFFSET
     $offset = ($currentPage - 1) * $recordsPerPage;
+    // 如果沒有記錄，則將 OFFSET 設為 0
+    if ($totalRecords == 0) {
+      $offset = 0;
+    }
   }
 
   // 使用get方法取得日期 讓選到的日期顯示紀錄
