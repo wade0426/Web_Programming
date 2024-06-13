@@ -118,5 +118,4 @@ $total_amount = 0;
 
 <h3>
     總金額(Total Amount): <?php echo $total_amount; ?>&nbsp元，共<?php echo mysqli_num_rows($records); ?>筆紀錄。
-    <?php echo mysqli_num_rows($categories); ?>種類別。
 </h3>
