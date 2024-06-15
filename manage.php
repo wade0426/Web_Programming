@@ -84,9 +84,12 @@ session_start();
         echo "<h3>您的使用者名稱是：" . $row['username'] . "</h3>";
         echo "<h3>您的 email 是：" . $row['email'] . "</h3>";
         echo "<h3>註冊時間：" . $row['created_at'] . "</h3>";
-
-
-        echo "";
+        // 顯示按鈕
+        echo '<form action="" method="POST">
+                    <button type="submit" class="btn btn-warning" name="change_password">變更密碼</button>
+                    
+                    <button name="deleter_user" type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">刪除帳號</button>
+            </form>';
     } else {
         echo '<form method="POST" action="">
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -131,10 +134,10 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
     <!-- 顯示按鈕 -->
-    <form action="" method="POST">
+    <!-- <form action="" method="POST">
         <button type="submit" class="btn btn-warning" name="change_password">變更密碼</button>
         <button type="submit" class="btn btn-danger" name="deleter_user">刪除帳號</button>
-    </form>
+    </form> -->
 
     <?php
     // 變更密碼按鈕
@@ -159,6 +162,43 @@ session_start();
     }
     if (isset($_POST['deleter_user'])) {
         echo "刪除帳號";
+        echo "你確定要刪除帳號嗎？(此動作無法復原)";
+        // 輸入密碼確認身分
+        // 跳出輸入密碼的視窗
+        echo '<form action="" method="POST">
+                <div class="form-floating mb-3">
+                    <input name="del_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">請輸入密碼：</label>
+                </div>
+                <div class="col-auto">
+                    <button name="submit_delete_user" class="btn btn-danger" type="submit">刪除帳號</button>
+                </div>
+            </form>';
+    }
+
+    if (isset($_POST['submit_delete_user'])) {
+        // 確認密碼
+        if (isset($_POST['del_password'])) {
+            $query = "SELECT * FROM users WHERE id=" . $_SESSION['v_user_id'];
+            $result = mysqli_query($link, $query);
+            $row = mysqli_fetch_assoc($result);
+            if (password_verify($_POST['del_password'], $row['password'])) {
+                // 刪除使用者
+                $query = "DELETE FROM users WHERE id=" . $_SESSION['v_user_id'];
+                if (mysqli_query($link, $query)) {
+                    unset($_SESSION['v_user_id']);
+                    unset($_SESSION['v_username']);
+                    echo "<script>alert('帳號刪除成功！')</script>";
+                    echo "<script>
+                    window.location.href = 'logout.php';</script>";
+                    exit();
+                } else {
+                    echo "<script>alert('帳號刪除失敗！')</script>";
+                }
+            } else {
+                echo "<script>alert('密碼輸入錯誤！')</script>";
+            }
+        }
     }
 
     // 更改密碼
