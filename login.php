@@ -86,6 +86,12 @@
             }
         }
         mysqli_close($link);
+        // 已經有登入了 自動跳轉 view_records.php
+        if (isset($_SESSION['user_id'])) {
+            echo "<script>
+                window.location.href = 'view_records.php';</script>";
+            exit();
+        }
     ?>
 
     <!-- 舊版登入畫面 -->
