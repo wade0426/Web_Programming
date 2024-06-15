@@ -120,6 +120,8 @@ h2 {
 .container .button:hover {
   background: #636363;
 }
+
+/* 漢堡條這樣做的 */
 @media screen and (max-width:520px){
   .navbar .nav{
       position: fixed;
