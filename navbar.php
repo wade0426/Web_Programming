@@ -12,7 +12,7 @@
     <li><a href="add_record.php" class="menu">新增</a></li>
     <li><a href="search_records.php" class="menu">查詢</a></li>
     <!-- <li><a href="edit_records.php" class="menu">編輯</a></li> -->
-    <li><a href="#" class="menu">幫助</a></li>
+    <!-- <li><a href="#" class="menu">幫助</a></li> -->
     <!-- <li><a href="logout.php" class="menu">登出</a></li> -->
     <!-- <li><a href="#" class="menu">Laptop</a></li> -->
 
