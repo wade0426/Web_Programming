@@ -38,7 +38,7 @@ session_start();
                 $query = "SELECT * FROM users WHERE username='$username'";
                 $result = mysqli_query($link, $query);
 
-                if (mysqli_num_rows($result) == 1) {
+                if (mysqli_num_rows($result) == 1 && $_SESSION['user_id'] == $_POST['username']) {
                     $row = mysqli_fetch_assoc($result);
 
                     if (password_verify($password, $row['password'])) {
