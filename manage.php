@@ -15,7 +15,6 @@ session_start();
 <style>
 </style>
 
-
 <body>
     <?php
     include 'db.php'; //引入資料庫連線檔案
@@ -37,8 +36,8 @@ session_start();
 
                 $query = "SELECT * FROM users WHERE username='$username'";
                 $result = mysqli_query($link, $query);
-
-                if (mysqli_num_rows($result) == 1 && $_SESSION['user_id'] == $_POST['username']) {
+                // 防止登入帳號和驗證帳號不同
+                if (mysqli_num_rows($result) == 1 && $_SESSION['username'] == $_POST['username']) {
                     $row = mysqli_fetch_assoc($result);
 
                     if (password_verify($password, $row['password'])) {
