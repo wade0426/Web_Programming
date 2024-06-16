@@ -2,7 +2,9 @@
 // 確保 session_start() 在任何輸出之前
 session_start();
 ?>
-
+<head>
+    <link rel="stylesheet" href="CSS/search.css">
+</head>
 <?php
 include 'db.php';
 include 'navbar.php';
@@ -53,69 +55,74 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 $records = mysqli_query($link, $search_query);
 $total_amount = 0;
 ?>
-
-<h2>查詢紀錄</h2>
-<form method="GET" action="">
-    開始日期: <input type="date" name="start_date"><br>
-    結束日期: <input type="date" name="end_date"><br>
-    描述(Description): <input type="text" name="description"><br>
-    類別(Category)：
-    <select name="category_id">
-        <option value="all" <?php if (isset($_GET['category_id']) && $_GET['category_id'] === 'all') echo 'selected'; ?>>全部</option>
-        <?php
-        $category_query = "SELECT * FROM categories";
-        $categories = mysqli_query($link, $category_query);
-        while ($row = mysqli_fetch_assoc($categories)) : ?>
-            <?php
-            // 保留使用者搜尋設定
-            if (isset($_GET['category_id']) && $_GET['category_id'] === $row['id']) {
-                echo '<option value=' . $row['id'] . ' selected>' . $row['name'] . '</option>';
-            } else {
-                echo '<option value=' . $row['id'] . '>' . $row['name'] . '</option>';
-            }
-            ?>
-        <?php endwhile; ?>
-    </select>
-    <br>
-    排序(Sort By):
-    <select name="sort_by">
-        <!-- <option value="record_date">時間(Date)</option> -->
-        <!-- <option value="amount">金額(Amount)</option> -->
-        <!-- 保留使用者搜尋設定 -->
-        <option value="record_date" <?php if (isset($_GET['sort_by']) && $_GET['sort_by'] === 'record_date') echo 'selected'; ?>>時間(Date)</option>
-        <option value="amount" <?php if (isset($_GET['sort_by']) && $_GET['sort_by'] === 'amount') echo 'selected'; ?>>金額(Amount)</option>
-    </select>
-    排序(Order)：
-    <select name="order">
-        <!-- <option value="asc">升冪(Ascending)</option>
-        <option value="desc">降冪(Descending)</option> -->
-        <!-- 保留使用者搜尋設定 -->
-        <option value="asc" <?php if (isset($_GET['order']) && $_GET['order'] === 'asc') echo 'selected'; ?>>升冪(Ascending)</option>
-        <option value="desc" <?php if (isset($_GET['order']) && $_GET['order'] === 'desc') echo 'selected'; ?>>降冪(Descending)</option>
-    </select><br>
-    <input type="submit" value="搜尋">
-</form>
-
-<table border="1">
-    <tr>
-        <th>類別(Category)</th>
-        <th>金額(Amount)</th>
-        <th>描述(Description)</th>
-        <th>日期(Record Date)</th>
-        <th>創建時間(Created At)</th>
-    </tr>
-    <?php while ($row = mysqli_fetch_assoc($records)) : ?>
-        <tr>
-            <td><?php echo $row['category_name']; ?></td>
-            <td><?php echo $row['amount'];
-                $total_amount += $row['amount']; ?></td>
-            <td><?php echo $row['description']; ?></td>
-            <td><?php echo $row['record_date']; ?></td>
-            <td><?php echo $row['created_at']; ?></td>
-        </tr>
-    <?php endwhile; ?>
-</table>
-
-<h3>
-    總金額(Total Amount): <?php echo $total_amount; ?>&nbsp元，共<?php echo mysqli_num_rows($records); ?>筆紀錄。
-</h3>
+<body>
+  <h2 style="text-align: center;">查詢紀錄</h2>
+  <div class="container">
+    <div class="row">
+      <form method="GET" action="">
+          開始日期: <input type="date" name="start_date"><br>
+          結束日期: <input type="date" name="end_date"><br>
+          描述(Description): <input type="text" name="description"><br>
+          類別(Category)：
+          <select name="category_id">
+              <option value="all" <?php if (isset($_GET['category_id']) && $_GET['category_id'] === 'all') echo 'selected'; ?>>全部</option>
+              <?php
+              $category_query = "SELECT * FROM categories";
+              $categories = mysqli_query($link, $category_query);
+              while ($row = mysqli_fetch_assoc($categories)) : ?>
+                  <?php
+                  // 保留使用者搜尋設定
+                  if (isset($_GET['category_id']) && $_GET['category_id'] === $row['id']) {
+                      echo '<option value=' . $row['id'] . ' selected>' . $row['name'] . '</option>';
+                  } else {
+                      echo '<option value=' . $row['id'] . '>' . $row['name'] . '</option>';
+                  }
+                  ?>
+              <?php endwhile; ?>
+          </select>
+          <br>
+          排序(Sort By):
+          <select name="sort_by">
+              <!-- <option value="record_date">時間(Date)</option> -->
+              <!-- <option value="amount">金額(Amount)</option> -->
+              <!-- 保留使用者搜尋設定 -->
+              <option value="record_date" <?php if (isset($_GET['sort_by']) && $_GET['sort_by'] === 'record_date') echo 'selected'; ?>>時間(Date)</option>
+              <option value="amount" <?php if (isset($_GET['sort_by']) && $_GET['sort_by'] === 'amount') echo 'selected'; ?>>金額(Amount)</option>
+          </select>
+          排序(Order)：
+          <select name="order">
+              <!-- <option value="asc">升冪(Ascending)</option>
+              <option value="desc">降冪(Descending)</option> -->
+              <!-- 保留使用者搜尋設定 -->
+              <option value="asc" <?php if (isset($_GET['order']) && $_GET['order'] === 'asc') echo 'selected'; ?>>升冪(Ascending)</option>
+              <option value="desc" <?php if (isset($_GET['order']) && $_GET['order'] === 'desc') echo 'selected'; ?>>降冪(Descending)</option>
+          </select><br>
+          <input class="button" type="submit" value="搜尋">
+      </form>
+    </div>
+  </div>
+  
+  <table class="table">
+      <tr>
+          <th>類別(Category)</th>
+          <th>金額(Amount)</th>
+          <th>描述(Description)</th>
+          <th>日期(Record Date)</th>
+          <th>創建時間(Created At)</th>
+      </tr>
+      <?php while ($row = mysqli_fetch_assoc($records)) : ?>
+          <tr>
+              <td><?php echo $row['category_name']; ?></td>
+              <td><?php echo $row['amount'];
+                  $total_amount += $row['amount']; ?></td>
+              <td><?php echo $row['description']; ?></td>
+              <td><?php echo $row['record_date']; ?></td>
+              <td><?php echo $row['created_at']; ?></td>
+          </tr>
+      <?php endwhile; ?>
+  </table>
+  
+  <h3 style="text-align: center;">
+      總金額(Total Amount): <?php echo $total_amount; ?>&nbsp元，共<?php echo mysqli_num_rows($records); ?>筆紀錄。
+  </h3>
+</body>

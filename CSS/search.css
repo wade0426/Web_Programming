@@ -1,0 +1,39 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+form{
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px auto;
+    padding: 10px;
+    text-align: left;
+
+    line-height: 30px;
+    font-size: 20px;
+}
+.container{
+    margin: 0 auto;
+    text-align: center;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.from_table{
+    margin: 0 auto;
+    text-align: center;
+}
+.table{
+    margin: 20px auto;
+    text-align: center;
+}
+.button{
+    margin: 5px auto;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #2fa600;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
