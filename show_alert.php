@@ -57,7 +57,7 @@ function show_message_danger($message1, $message2, $link)
     echo '
     <body>
     <div class="alert alert-danger" role="alert" style="text-align: center;">
-        ' . $message1 . '<a href="'. $link .'" class="alert-link">'. $message2 . '</a>。
+        ' . $message1 . '<a href="' . $link . '" class="alert-link">' . $message2 . '</a>。
     </div>
     </body>
     ';
@@ -86,7 +86,7 @@ function show_toasts_success($message1)
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                     <div class="toast-body text-success">
-                        '.$message1.'
+                        ' . $message1 . '
                     </div>
                 </div>
             </div>

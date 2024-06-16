@@ -42,10 +42,10 @@ if (isset($_GET['edit_id'])) {
 ?>
 
 <?php if (isset($record)) : ?>
-    <h2>Edit Record</h2>
+    <h2>編輯紀錄</h2>
     <form method="POST" action="">
         <input type="hidden" name="edit_id" value="<?php echo $record['id']; ?>">
-        Category: 
+        類別: 
         <select name="category_id" required>
             <?php while ($row = mysqli_fetch_assoc($categories)) : ?>
                 <option value="<?php echo $row['id']; ?>" <?php if ($row['id'] == $record['category_id']) echo 'selected'; ?>>
@@ -53,11 +53,12 @@ if (isset($_GET['edit_id'])) {
                 </option>
             <?php endwhile; ?>
         </select><br>
-        Amount: <input type="number" step="0.01" name="amount" value="<?php echo $record['amount']; ?>" required><br>
-        Description: <input type="text" name="description" value="<?php echo $record['description']; ?>"><br>
-        Record Date: <input type="date" name="record_date" value="<?php echo $record['record_date']; ?>" required><br>
-        <input type="submit" value="Update Record">
+        金額: <input type="number" step="0.01" name="amount" value="<?php echo $record['amount']; ?>" required><br>
+        描述: <input type="text" name="description" value="<?php echo $record['description']; ?>"><br>
+        時間: <input type="date" name="record_date" value="<?php echo $record['record_date']; ?>" required><br>
+        <input type="submit" value="更新紀錄">
     </form>
 <?php else : ?>
+    <p>錯誤，沒有這個紀錄</p>
     <p>No record found to edit.</p>
 <?php endif; ?>
