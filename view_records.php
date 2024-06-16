@@ -13,6 +13,7 @@ session_start();
   <!-- 其實就是 @import "calendar.css"; -->
   <link rel="stylesheet" href="CSS/calendar.css">
   <link rel="stylesheet" href="CSS/table.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
 </head>
 <?php
 include 'db.php';
@@ -197,7 +198,9 @@ $user_id = $_SESSION['user_id'];
       $delete_selected_query = "DELETE FROM records WHERE id IN ($delete_ids) AND user_id='$user_id'";
 
       if (mysqli_query($link, $delete_selected_query)) {
-        echo "所選紀錄已成功刪除！";
+        // echo "所選紀錄已成功刪除！";
+        include 'show_alert.php';
+        show_toasts_success("所選紀錄已成功刪除！");
       } else {
         echo "Error: " . mysqli_error($link);
       }
@@ -265,8 +268,8 @@ $user_id = $_SESSION['user_id'];
           <?php endif; ?>
         </table>
     
-        <input type="submit" name="delete_selected" value="刪除所選紀錄" onclick="return confirm('您確定要刪除所選紀錄嗎？(此操作不可回復)')">
-        <input type="submit" name="delete_all" value="刪除所有紀錄" onclick="return confirm('您確定要刪除所有紀錄嗎？(此操作不可回復)')">
+        <input type="submit" class="btn btn-warning" name="delete_selected" value="刪除所選紀錄" onclick="return confirm('您確定要刪除所選紀錄嗎？(此操作不可回復)')">
+        <input type="submit" class="btn btn-danger" name="delete_all" value="刪除所有紀錄" onclick="return confirm('您確定要刪除所有紀錄嗎？(此操作不可回復)')">
     
         <!-- 顯示分頁鏈接(使用for迴圈) -->
         <!-- 有$_GET['date']的話不顯示頁數 -->
