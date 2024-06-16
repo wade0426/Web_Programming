@@ -9,9 +9,9 @@
 <body>
     <!-- 選單 -->
     <nav>
-        <ul>
+        <ul class="js-nav">
             <li>
-                <a href="#topic">主題</a>
+                <a href="#title">主題</a>
             </li>
             <li>
                 <a href="#motivation">製作動機</a>
@@ -34,7 +34,7 @@
     </nav>
     <!-- 主題 -->
     <header>
-        <h1 id="tittle">
+        <h1 id="title">
             記帳網頁
         </h1>
         <p id="groupMbr">
@@ -46,7 +46,7 @@
     <hr>
     <!-- 製作動機 -->
     <div id="motivation">
-        <h2 class="tittles">
+        <h2 class="titles">
             製作動機
         </h2>
         <p class="mot-txt">
@@ -57,21 +57,21 @@
             為了解決這問題，我們決定製作一個專門的記帳網頁。
         </p>
         <div class="break"></div>
-        <p class="mot-tittle">1. 集中管理所有財務信息</p>
+        <p class="mot-title">1. 集中管理所有財務信息</p>
         <p class="mot-txt">當成員們零散地報告開銷時，很容易遺漏或錯算某些金額。透過記帳網頁，可以將所有開銷信息集中記錄在一個平台上，每個成員都可以直接在網頁上輸入他們的支出，確保所有的金額都被準確地記錄下來。</p>
-        <p class="mot-tittle">2. 即時更新和查閱</p>
+        <p class="mot-title">2. 即時更新和查閱</p>
         <p class="mot-txt">記帳網頁可以即時更新支出和收入的數據，並且所有成員可以隨時查閱最新的財務狀況。</p>
-        <p class="mot-tittle">3. 簡化溝通流程</p>
+        <p class="mot-title">3. 簡化溝通流程</p>
         <p class="mot-txt">通過記帳網頁，成員們不再需要通過各種方式零散地報告開銷，而是可以統一通過網頁進行記錄和提交。</p>
     </div>
     <!-- 功能介紹 -->
     <main id="main">
-        <div class="tittles">
+        <div class="titles">
             <h2>功能介紹</h2>
         </div>
         <img src="images/pic1.jpg" alt="" id="changeImg">
         <div id="main-login">
-            <div class="loginTittle">登入頁面</div>
+            <div class="loginTitle">登入頁面</div>
             <div class="loginTxt">使用者輸入帳號和密碼進入系統，驗證其身份。</div>
         </div>
         <div class="break"></div>
@@ -95,7 +95,7 @@
     </main>
     <!-- 使用技術 -->
     <div id="technology">
-        <div class="tittles">
+        <div class="titles">
             <h2>使用技術</h2>
         </div>
         <div class="break"></div>
@@ -116,7 +116,7 @@
     </div>
     <!-- 分工表 -->
     <div id="divisionTab">
-        <div class="tittles">
+        <div class="titles">
             <h2>分工表</h2>
         </div>
         <table>
@@ -138,7 +138,8 @@
             </tr>
         </table>
     </div>
-    
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="vendor/onepagenav/jquery.nav.js"></script>
     <script>
         document.getElementById('changeImg').addEventListener('click', function() {
             // 使用正則表達式匹配相對路徑
@@ -150,14 +151,14 @@
             if (url1Pattern.test(this.src)) {
                 this.src = 'images/pic2.jpg';
                 textContent.innerHTML = `
-                    <div class="loginTittle">註冊頁面</div>
+                    <div class="loginTitle">註冊頁面</div>
                     <div class="loginTxt">新用戶提供使用者名稱、電子郵件、密碼來創建帳戶。</div>
                 `;
             } else if (url2Pattern.test(this.src)) {
                 // 如果目前顯示的是第二張圖片，則切換回第一張圖片
                 this.src = 'images/pic1.jpg';
                 textContent.innerHTML = `
-                    <div class="loginTittle">登入頁面</div>
+                    <div class="loginTitle">登入頁面</div>
                     <div class="loginTxt">使用者輸入帳號和密碼進入系統，驗證其身份。</div>
                 `;
             }
@@ -204,6 +205,18 @@
 
         document.getElementById('features-btn4').addEventListener('click',function() {
             document.getElementById('features-img').src = `images/pic3.jpg`;
+        });
+
+        //滾動監聽事件
+        $(document).ready(function() {
+            $('.js-nav').onePageNav({
+                currentClass:'active',
+                changeHash:false,
+                scrollSpeed:750,
+                scrollThreshold:0.5,
+                filter:'',
+                easing:'swing'
+            });
         });
     </script>
 </body>
