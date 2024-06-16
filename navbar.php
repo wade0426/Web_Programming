@@ -9,7 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="navbar">
+    <div class="jf_navbar">
         <ul class="nav c_center">
             <li>
                 <a href="view_records.php" class="menu">主頁</a>
@@ -43,11 +43,11 @@
 $(document).ready(function(){
     $('.menu-toggle').on('click',function(){
         $(this).toggleClass('active');
-        $('.navbar .nav').toggleClass('active');
+        $('.jf_navbar .nav').toggleClass('active');
     })
     $('.nav-link').on('click',function(){
         $('.menu-toggle').removeClass('active');
-        $('.navbar .nav').removeClass('active');
+        $('.jf_navbar .nav').removeClass('active');
     })
 })
 </script>

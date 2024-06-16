@@ -123,7 +123,7 @@ h2 {
 
 /* 漢堡條這樣做的 */
 @media screen and (max-width:520px){
-  .navbar .nav{
+  .jf_navbar .nav{
       position: fixed;
       left: -100%;
       top :0;
@@ -140,17 +140,17 @@ h2 {
       visibility:hidden;
       transition: all 0.3s;
   }
-  .navbar .nav.active{
+  .jf_navbar .nav.active{
       opacity: 1;
       visibility:visible;
       left: 0;
   }
-  .navbar .nav .menu{
+  .jf_navbar .nav .menu{
       text-align: center;
       padding: 16px;
   }
 }
-.navbar .menu-toggle{
+.jf_navbar .menu-toggle{
   width: 48px;
   height: 48px;
   float: right;
@@ -159,11 +159,11 @@ h2 {
   z-index: 600;
 }
 @media screen and (max-width:520px){
-  .navbar .menu-toggle{
+  .jf_navbar .menu-toggle{
       display: inline-block;
   }
 }
-.navbar .menu-toggle span{
+.jf_navbar .menu-toggle span{
   display: block;
   width: 32px;
   height: 2px;
@@ -173,23 +173,23 @@ h2 {
   transform: translate(-50%,0);
   transition: all 0.3s;
 }
-.navbar .menu-toggle span:nth-child(1){
+.jf_navbar .menu-toggle span:nth-child(1){
   top:12px;
 }
-.navbar .menu-toggle.active span:nth-child(1){
+.jf_navbar .menu-toggle.active span:nth-child(1){
   top:50%;
   transform: translate(-50%,-50%) rotate(45deg);
 }
-.navbar .menu-toggle span:nth-child(2){
+.jf_navbar .menu-toggle span:nth-child(2){
   top:22px;
 }
-.navbar .menu-toggle.active span:nth-child(2){
+.jf_navbar .menu-toggle.active span:nth-child(2){
   opacity: 0;
 }
-.navbar .menu-toggle span:nth-child(3){
+.jf_navbar .menu-toggle span:nth-child(3){
   top:32px;
 }
-.navbar .menu-toggle.active span:nth-child(3){
+.jf_navbar .menu-toggle.active span:nth-child(3){
   top:50%;
   transform: translate(-50%,-50%) rotate(-45deg);
 }
