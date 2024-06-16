@@ -194,8 +194,13 @@ session_start();
             $result = mysqli_query($link, $query);
             $row = mysqli_fetch_assoc($result);
             if (password_verify($_POST['del_password'], $row['password'])) {
+                // 如果這個帳號還有紀錄，也要一併刪除
+                // 刪除紀錄
+                $query = "DELETE FROM records WHERE user_id=" . $_SESSION['v_user_id'];
+                mysqli_query($link, $query);
                 // 刪除使用者
                 $query = "DELETE FROM users WHERE id=" . $_SESSION['v_user_id'];
+                echo $query;
                 if (mysqli_query($link, $query)) {
                     unset($_SESSION['v_user_id']);
                     unset($_SESSION['v_username']);
