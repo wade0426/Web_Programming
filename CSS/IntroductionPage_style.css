@@ -1,0 +1,344 @@
+* {
+    font-family: Arial, sans-serif;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* nav */
+nav {
+    z-index: 1000;
+    display: flex;
+    position: sticky;
+    top: 0;
+    background-color: RGB(68,68,68);
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+}
+
+nav li {
+    display: inline;
+    margin: 0 15px; /* 水平間隔 */
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    display: block;
+}
+
+nav a:hover {
+    background-color: #575757; /* 滑鼠懸停效果 */
+    border-radius: 4px;
+}
+
+nav button {
+    color: #0099CC; 
+    background: transparent; 
+    border: 2px solid #0099CC;
+    border-radius: 6px; 
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav button {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #008CBA;
+}
+
+nav button:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+
+/* header */
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    flex-wrap: wrap;
+    width: 100%;
+
+    padding: 1%;
+    margin: 0%;
+    margin-top: 2%;
+}
+
+header #tittle {
+    font-size: 350%;
+    width: 100%;
+}
+
+header #groupMbr {
+    margin: 1%;
+    text-align: right;
+    width: 90%;
+}
+
+/* motivation動機 */
+#motivation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: left;
+    flex-wrap: wrap;
+
+    margin-top: 5%;
+    width: 100%;
+}
+
+#motivation .tittles {
+    margin-bottom: 2%;
+    border-bottom: 2px solid black;
+    padding-bottom: 1%;
+    width: 85%;
+}
+
+.tittles {
+    text-align: left;
+    font-size: 250%;
+}
+
+#motivation .mot-tittle {
+    margin-top: 2%;
+    margin-bottom: 1%;
+    width: 85%;
+    font-size: 180%;
+}
+
+#motivation .mot-txt {
+    font-size: 130%;
+    width: 85%;
+    margin: 0%;
+}
+
+#motivation .mot-txt:last-child {
+    border-bottom: 2px solid black;
+    padding-bottom: 1.5%;
+    width: 85%;
+}
+
+.mot-txt:hover {
+    box-shadow: 5px 5px 20px 5px rgba(0,0,0,0.5);
+    filter: brightness(1.5);
+    font-size: 200%;
+}
+
+/* main */
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+main .tittles {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    width: 100%;
+}
+
+main img {
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    border: 2px solid #000;
+}
+
+main img:hover {
+    box-shadow: 3px 8px 8px grey;
+}
+
+main #main-login {
+    margin-left: 6%;
+}
+
+main #main-login .loginTittle {
+    font-size: 250%;
+    width: 95%;
+    margin-bottom: 5%;
+}
+
+main #main-login .loginTxt {
+    font-size: 200%;
+}
+
+main .break {
+    margin-bottom: 12%;
+}
+
+main .main-features {
+    background-color: #cfcece;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    border: 2px solid #ccc; /* 邊框 */
+    border-radius: 10px; /* 圓角 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影 */
+    transition: transform 0.3s, box-shadow 0.3s; /* 過渡效果 */
+}
+
+.features-btn {
+    position: relative;
+    min-width: 160px;
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    margin-right: 3%;
+    margin-top: 4%;
+}
+
+.features-btn span {
+    color: #FFFFFF;
+    mix-blend-mode: difference;
+}
+
+.features-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: 100%;
+    border-radius: 50px;
+    background: black;
+    transition: all 0.85s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.features-btn:hover:before {
+  background: black;
+  width: 100%;
+}
+
+.main-features img {
+    margin-top: -5%;
+    width: 25%;
+    object-fit: cover;
+}
+
+/* technology */
+#technology {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8%;
+    flex-wrap: wrap;
+}
+
+#technology .tittles {
+    margin-bottom: 5%;
+}
+
+.tech-container {
+    display: flex;
+    gap: 10px;
+    width: 100%; 
+    height: 20%;
+    align-items: stretch;
+}
+
+#technology fieldset legend {
+    font-size: 200%;
+    font-weight: bold;
+}
+
+#technology fieldset {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    height: 400px;
+
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    
+}
+
+#technology fieldset:hover {
+    transform: translateY(-5px); /* 懸停時上移 */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* 懸停時的陰影 */
+}
+
+#technology img {
+    width: 80%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/* table */
+#divisionTab {
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
+    margin-top: 8%;
+    flex-wrap: wrap;
+}
+
+#divisionTab .tittles {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 4%;
+}
+
+#divisionTab table {
+    border: #000;
+}
+
+td {
+    font-weight: bold;
+    text-align: center;
+    font-size: 200%;
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #bebdbd; /* 偶數行背景色 */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* 懸停行背景色 */
+}
+
+/* flex換行 */
+.break {
+    flex-basis: 100%;
+    height: 0; /* 不佔高度 */
+    margin: 0; /* 沒有額外的外邊距 */
+    padding: 0; /* 沒有額外的內邊距 */
+}
