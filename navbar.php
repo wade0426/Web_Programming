@@ -20,9 +20,9 @@
             <li>
                 <a href="search_records.php" class="menu">查詢</a>
             </li>
-            <li>
-                <a href="#" class="menu">幫助</a>
-            </li>
+            <!-- <li> -->
+                <!-- <a href="#" class="menu">幫助</a> -->
+            <!-- </li> -->
             <?php if (isset($_SESSION['user_id'])) : ?>
                 <!-- 登入才會有管理系統 -->
                 <li><a href="manage.php" class="menu">管理系統</a></li>
