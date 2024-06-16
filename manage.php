@@ -10,6 +10,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>帳號管理系統</title>
+    <link rel="stylesheet" href="CSS/manage.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <style>
@@ -77,8 +78,8 @@ session_start();
         // 取得第一筆資料
         $row = mysqli_fetch_assoc($result); // 取得第一筆資料
         // 顯示資料
-        echo "<h1>帳號管理系統</h1>";
-        echo "<h1>這裡應該要有一個form表單進行排版</h1>";
+        echo "<h1 class='title'>帳號管理系統</h1>";
+        echo "<div class='container'>";
         echo "<h2>歡迎 " . $row['username'] . " 回來！</h2>";
         echo "<h3>您的使用者名稱是：" . $row['username'] . "</h3>";
         echo "<h3>您的 email 是：" . $row['email'] . "</h3>";
@@ -89,37 +90,39 @@ session_start();
                     
                     <button name="deleter_user" type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">刪除帳號</button>
             </form>';
+        echo "</div>";
     } else {
-        echo '<form method="POST" action="">
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">驗證分份</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-floating mb-3">
-                            <input name="username" class="form-control" id="floatingInput" placeholder="Leave a comment here">
-                            <label for="floatingInput">請輸入帳號：</label>
+        echo '
+        <form method="POST" action="">
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">驗證分份</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="form-floating">
-                            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">請輸入密碼：</label>
+                        <div class="modal-body">
+                            <div class="form-floating mb-3">
+                                <input name="username" class="form-control" id="floatingInput" placeholder="Leave a comment here">
+                                <label for="floatingInput">請輸入帳號：</label>
+                            </div>
+                            <div class="form-floating">
+                                <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                                <label for="floatingPassword">請輸入密碼：</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                        <!-- <button type="button" class="btn btn-primary">驗證</button> -->
-                        <!-- <button type="submit" class="btn btn-primary mb-3">Confirm identity</button> -->
-                        <div class="col-7">
-                            <button class="btn btn-primary" type="submit">驗證</button>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                            <!-- <button type="button" class="btn btn-primary">驗證</button> -->
+                            <!-- <button type="submit" class="btn btn-primary mb-3">Confirm identity</button> -->
+                            <div class="col-7">
+                                <button class="btn btn-primary" type="submit">驗證</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
     <script>
         // 當網頁的 DOM 元素載入完成後，執行以下程式碼
         window.addEventListener("DOMContentLoaded", function() {
@@ -141,38 +144,44 @@ session_start();
     <?php
     // 變更密碼按鈕
     if (isset($_POST['change_password'])) {
-        echo '<form action="" method="POST">
-                <div class="form-floating mb-3">
-                    <input name="old_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">請輸入原本的密碼：</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input name="new_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">請輸入要更改的密碼：</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input name="v_new_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">請再次輸入要更改的密碼：</label>
-                </div>
-                <div class="col-auto">
-                    <button name="submit_new_password" class="btn btn-primary" type="submit">更改密碼</button>
-                </div>
-            </form>';
+        echo "<div class='container'>";
+        echo '
+        <form action="" method="POST">
+            <div class="form-floating mb-3">
+                <input name="old_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">請輸入原本的密碼：</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input name="new_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">請輸入要更改的密碼：</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input name="v_new_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">請再次輸入要更改的密碼：</label>
+            </div>
+            <div class="col-auto">
+                <button name="submit_new_password" class="btn btn-primary" type="submit">更改密碼</button>
+            </div>
+        </form>';
+        echo "</div>";
     }
     if (isset($_POST['deleter_user'])) {
         echo "刪除帳號";
         echo "你確定要刪除帳號嗎？(此動作無法復原)";
         // 輸入密碼確認身分
         // 跳出輸入密碼的視窗
-        echo '<form action="" method="POST">
-                <div class="form-floating mb-3">
-                    <input name="del_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">請輸入密碼：</label>
-                </div>
-                <div class="col-auto">
-                    <button name="submit_delete_user" class="btn btn-danger" type="submit">刪除帳號</button>
-                </div>
-            </form>';
+        echo"<div class='container'>";
+        echo '
+        <form action="" method="POST">
+            <div class="form-floating mb-3">
+                <input name="del_password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">請輸入密碼：</label>
+            </div>
+            <div class="col-auto">
+                <button name="submit_delete_user" class="btn btn-danger" type="submit">刪除帳號</button>
+            </div>
+        </form>';
+        echo "</div>";
     }
 
     if (isset($_POST['submit_delete_user'])) {
