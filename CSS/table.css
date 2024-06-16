@@ -24,15 +24,6 @@ table, th, td {
     background-color: #007bff;
     color: white;
 }
-.container{
-    margin: 0 auto;
-    text-align: center;
-}
-.row{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
 .num{
     margin: 0 auto;
     text-align: center;

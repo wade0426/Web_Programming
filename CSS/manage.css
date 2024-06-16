@@ -1,0 +1,41 @@
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #000;
+    margin: 5px;
+}
+h2{
+    font-size: 30px;
+    color: #000;
+    text-align: left;
+}
+h3{
+    font-size: 25px;
+    color: #000;
+    text-align: left;
+}
+form{
+    margin: 10px auto;
+    padding: 10px;
+    text-align: left;
+
+    line-height: 30px;
+    font-size: 20px;
+}
+.container{
+    margin: 0 auto;
+    width: 80%;
+    padding: 10px;
+}
+.title{
+    font-size: 50px;
+    color: #000;
+    text-align: center;
+    font-style:italic;
+    font-weight: bold;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
