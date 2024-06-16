@@ -11,7 +11,7 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>主頁</title>
   <!-- 其實就是 @import "calendar.css"; -->
-  <link rel="stylesheet" href="view_records.css">
+  <link rel="stylesheet" href="CSS/calendar.css">
 </head>
 <style>
 </style>

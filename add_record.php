@@ -11,7 +11,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新增紀錄</title>
-    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="CSS/nav.css">
 </head>
 <?php
 include 'db.php';
