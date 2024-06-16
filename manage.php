@@ -78,9 +78,9 @@ session_start();
         // 取得第一筆資料
         $row = mysqli_fetch_assoc($result); // 取得第一筆資料
         // 顯示資料
-        echo "<h1 class='title'>帳號管理系統</h1>";
+        echo "<h1 class='jf_title'>帳號管理系統</h1>";
         echo "<div class='container'>";
-        echo "<h2>歡迎 " . $row['username'] . " 回來！</h2>";
+        // echo "<h2>歡迎 " . $row['username'] . " 回來！</h2>";
         echo "<h3>您的使用者名稱是：" . $row['username'] . "</h3>";
         echo "<h3>您的 email 是：" . $row['email'] . "</h3>";
         echo "<h3>註冊時間：" . $row['created_at'] . "</h3>";
@@ -167,8 +167,11 @@ session_start();
     }
     if (isset($_POST['deleter_user'])) {
         echo"<div class='container'>";    
-        echo "刪除帳號";
-        echo "你確定要刪除帳號嗎？(此動作無法復原)";
+        // echo "刪除帳號";
+        echo "<p style='font-weight: bolder; color:red'>你確定要刪除帳號嗎？(此動作無法復原)</p>";
+        // include 'show_alert.php';
+        // show_error();
+
         // 輸入密碼確認身分
         // 跳出輸入密碼的視窗
         echo '

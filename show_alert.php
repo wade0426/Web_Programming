@@ -72,7 +72,7 @@ function show_toasts_success($message1)
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>show_error</title>
-    <link rel="stylesheet" href="toast.css">
+    <link rel="stylesheet" href="CSS/toast.css">
     </head>
     <body>
         <div aria-live="polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
