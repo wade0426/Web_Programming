@@ -1,7 +1,8 @@
 <?php
-    // 確保 session_start() 在任何輸出之前
-    session_start();
+// 確保 session_start() 在任何輸出之前
+session_start();
 ?>
+
 <head>
     <link rel="stylesheet" type="text/css" href="CSS/edit.css">
     <title>編輯紀錄</title>
@@ -24,9 +25,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_id'])) {
     $update_query = "UPDATE records 
                     SET category_id='$category_id', amount='$amount', description='$description', record_date='$record_date' 
                     WHERE id='$edit_id' AND user_id='{$_SESSION['user_id']}'";
-    
+
     if (mysqli_query($link, $update_query)) {
-        echo "Record updated successfully!";
+        // echo "Record updated successfully!";
+        include 'show_alert.php';
+        show_toasts_success("編輯紀錄成功！");
+        echo '<script>setTimeout(function(){window.location.href = "view_records.php";}, 800);</script>';
     } else {
         echo "Error: " . mysqli_error($link);
     }
@@ -52,7 +56,7 @@ if (isset($_GET['edit_id'])) {
         <div class="row">
             <form method="POST" class="from" action="">
                 <input type="hidden" name="edit_id" value="<?php echo $record['id']; ?>">
-                類別: 
+                類別:
                 <select name="category_id" required>
                     <?php while ($row = mysqli_fetch_assoc($categories)) : ?>
                         <option value="<?php echo $row['id']; ?>" <?php if ($row['id'] == $record['category_id']) echo 'selected'; ?>>
