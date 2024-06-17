@@ -403,7 +403,7 @@ $user_id = $_SESSION['user_id'];
     }
   }
 
-  // 更新日曆的顯示
+  // 更新日曆的顯示 監聽 下拉
   function updateCalendar() {
     const selectedYear = parseInt(yearSelect.value);
     const selectedMonth = parseInt(monthSelect.value);
