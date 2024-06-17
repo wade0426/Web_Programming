@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>介紹</title>
     <link rel="stylesheet" href="CSS/IntroductionPage_style.css">
 </head>
 <body>
@@ -89,7 +89,7 @@
                 <span>管理系統</span>
             </button>
             <div class="break"></div>
-            <img src="images/pic1.jpg" alt="" id="features-img">
+            <img src="images/pic3.jpg" alt="" id="features-img">
             <div class="break"></div>
         </div>
     </main>
@@ -133,7 +133,7 @@
             </tr>
             <tr>
                 <td>撰寫前後端架構</td>
-                <td>報告及PPT製作</td>
+                <td>報告及介紹網頁製作</td>
                 <td>網頁美化及排版</td>
             </tr>
         </table>
@@ -172,12 +172,16 @@
             const url6Pattern = /images\/pic6\.jpg$/;
 
             const url8Pattern = /images\/pic8\.jpg$/;
+            
+            const url10Pattern = /images\/pic10\.jpg$/;
+            const url11Pattern = /images\/pic11\.jpg$/;
+            const url12Pattern = /images\/pic12\.jpg$/;
 
-            // 主頁(預設)=>主頁(6/17)
+            // 主頁(預設)=>主頁(6/19)
             if (url3Pattern.test(this.src)) {
                 this.src = 'images/pic4.jpg';
             } else if (url4Pattern.test(this.src)) {
-                // 主頁(6/17)=>主頁(6/5)
+                // 主頁(6/19)=>主頁(6/5)
                 this.src = 'images/pic5.jpg';
             } else if (url5Pattern.test(this.src)) {
                 // 主頁(6/5)=>主頁(編輯)
@@ -187,6 +191,14 @@
             //查詢(預設)=>查詢(6/5-6/12)
             if (url8Pattern.test(this.src)) {
                 this.src = 'images/pic9.jpg';
+            }
+            
+            if (url10Pattern.test(this.src)) {
+                this.src = 'images/pic11.jpg';
+            } else if (url11Pattern.test(this.src)) {
+                this.src = 'images/pic12.jpg';
+            } else if (url12Pattern.test(this.src)) {
+                this.src = 'images/pic13.jpg';
             }
         });
 
@@ -204,7 +216,7 @@
         });
 
         document.getElementById('features-btn4').addEventListener('click',function() {
-            document.getElementById('features-img').src = `images/pic3.jpg`;
+            document.getElementById('features-img').src = `images/pic10.jpg`;
         });
 
         //滾動監聽事件
