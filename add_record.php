@@ -29,16 +29,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 判斷是新增類別還是新增記錄
     if (isset($_POST['new_category_name']) && isset($_POST['new_category_type'])) {
         // 添加新類別
-        $new_category_name = mysqli_real_escape_string($link, $_POST['new_category_name']);
-        $new_category_type = mysqli_real_escape_string($link, $_POST['new_category_type']);
-
-        $category_query = "INSERT INTO categories (name, type) VALUES ('$new_category_name', '$new_category_type')";
-        if (mysqli_query($link, $category_query)) {
-            // echo "New category added successfully!";
+        // 如果已經有這個類別就不要新增
+        $category_query = "SELECT * FROM categories WHERE name = '$_POST[new_category_name]' AND type = '$_POST[new_category_type]'";
+        $category_result = mysqli_query($link, $category_query);
+        if (mysqli_num_rows($category_result) > 0) {
             include 'show_alert.php';
-            show_toasts_success("成功新增類別！");
-        } else {
-            echo "Error: " . mysqli_error($link);
+            show_toasts_success("已經有這個類別了！");
+            echo '<script>setTimeout(function(){window.location.href = "add_record.php";}, 800);</script>';
+            // echo "Category already exists!";
+            die();
+        }
+        else {
+            // 類別不存在
+            $new_category_name = mysqli_real_escape_string($link, $_POST['new_category_name']);
+            $new_category_type = mysqli_real_escape_string($link, $_POST['new_category_type']);
+    
+            $category_query = "INSERT INTO categories (name, type) VALUES ('$new_category_name', '$new_category_type')";
+            if (mysqli_query($link, $category_query)) {
+                // echo "New category added successfully!";
+                include 'show_alert.php';
+                show_toasts_success("成功新增類別！");
+            } else {
+                echo "Error: " . mysqli_error($link);
+            }
         }
     } else {
         // 添加新記錄
