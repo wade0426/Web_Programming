@@ -25,7 +25,7 @@
             <!-- </li> -->
             <?php if (isset($_SESSION['user_id'])) : ?>
                 <!-- 登入才會有管理系統 -->
-                <li><a href="manage.php" class="menu">管理系統</a></li>
+                <li><a href="manage.php" class="menu">管理</a></li>
                 <li><a href="logout.php" class="menu">登出</a></li>
             <?php else : ?>
                 <li><a href="login.php" class="menu">登入</a></li>
