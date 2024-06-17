@@ -34,7 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $category_query = "INSERT INTO categories (name, type) VALUES ('$new_category_name', '$new_category_type')";
         if (mysqli_query($link, $category_query)) {
-            echo "New category added successfully!";
+            // echo "New category added successfully!";
+            include 'show_alert.php';
+            show_toasts_success("成功新增類別！");
         } else {
             echo "Error: " . mysqli_error($link);
         }

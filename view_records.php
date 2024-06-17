@@ -101,7 +101,7 @@ $user_id = $_SESSION['user_id'];
     $recordsPerPage = "All";
     $totalPages = 0;
   } else {
-    // 每頁顯示的記錄數 預設為 10 ， 修正為預設為All。 修正為10
+    // 每頁顯示的記錄數 預設為 10
     $recordsPerPage = isset($_GET['selectpage']) ? intval($_GET['selectpage']) : 10;
 
     // 計算總記錄數
@@ -193,7 +193,7 @@ $user_id = $_SESSION['user_id'];
         // echo "所選紀錄已成功刪除！";
         include 'show_alert.php';
         show_toasts_success("所選紀錄已成功刪除！");
-        // 等待 X秒 後重新整理頁面
+        // 等待 800秒 後重新整理頁面
         echo '<script>setTimeout(function(){window.location.href = "view_records.php";}, 800);</script>';
       } else {
         echo "Error: " . mysqli_error($link);
@@ -263,7 +263,6 @@ $user_id = $_SESSION['user_id'];
       <ul class="pagination" style="display: flex; justify-content: center;">
         <li style="list-style: none;">
           <!-- 上一頁 -->
-          <!-- 如果是第一頁不要生成 用if看總頁數 -->
           <a class="page-link" href="?page=<?php echo $currentPage - 1 . '&selectpage=' . $recordsPerPage; ?>" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
@@ -278,7 +277,6 @@ $user_id = $_SESSION['user_id'];
         <?php endfor; ?>
         <li style="list-style: none;">
           <!-- 下一頁 -->
-          <!-- 如果到最後一頁不要生成 用if看總頁數 -->
           <a class="page-link" href="?page=<?php echo $currentPage + 1 . '&selectpage=' . $recordsPerPage; ?>" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
