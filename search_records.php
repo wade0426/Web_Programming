@@ -123,6 +123,11 @@ $total_amount = 0;
                 <td><?php echo $row['created_at']; ?></td>
             </tr>
         <?php endwhile; ?>
+        <?php if (mysqli_num_rows($records) == 0) : ?>
+            <tr>
+                <td colspan="5" style="text-align: center;">沒有紀錄</td>
+            </tr>
+        <?php endif; ?>
     </table>
 
     <h3 style="text-align: center;">
